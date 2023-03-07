@@ -1,0 +1,55 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        int[] results = solveContinuousSequences();
+        for (int result : results) {
+            System.out.println(result+" ");
+        }
+    }
+
+    /**
+     * 求解连续数列
+     *
+     * @return {@link int[]}
+     *
+     * 已知连续正整数数列 {K}=K1,K2,K3…Ki 的各个数相加之和为 S ， i=N
+     * (0<S<100000, 0<N<100000), 求此数列 K
+     * 输入包含两个参数: 1）连续正整数数列和 S 2）数列里数的个数 N
+     * 如果有解输出数列 K，如果无解输出-1
+     * 525 6
+     * 85 86 87 88 89 90
+     * 3 5
+     * -1
+     *
+     */
+    public static int[] solveContinuousSequences() {
+        Scanner scanner = new Scanner(System.in);
+        int sum = scanner.nextInt();
+        int count = scanner.nextInt();
+        int[] results = new int[count];
+        if (count%2==1) {
+            if (sum%count == 0) {
+                int firstNumber = sum/count-count/2;
+                results[0] = firstNumber;
+                for (int i=1; i<results.length;i++) {
+                    results[i] = results[i-1]+1;
+                }
+            }
+            else {
+                return new int[]{-1};
+            }
+        }
+        else {
+            if (Double.parseDouble(String.valueOf(sum))/count-0.5 == sum/count) {
+                int firstNumber = sum/count-count/2+1;
+                results[0] = firstNumber;
+                for (int i=1; i<results.length;i++) {
+                    results[i] = results[i-1]+1;
+                }
+            }
+            else {
+                return new int[]{-1};
+            }
+        }
+        return results;
+    }
+}

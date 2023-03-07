@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.TreeSet;
+ 
+public class Main{
+    public static void main(String[] args) throws Exception{
+        //io输入
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        //整数序列
+        String I;
+        while((I=br.readLine())!=null){
+            //规则序列
+            String R=br.readLine();
+             
+            //分割为字符串数组
+            String[] arrI=I.split(" ");
+            String[] arrR=R.split(" ");
+             
+            //用于去重和排序
+            TreeSet<Integer> set=new TreeSet<>();
+             
+            //遍历规则序列，加入到set
+            int m=arrR.length;
+            for(int i=1;i<m;i++){
+                set.add(Integer.parseInt(arrR[i]));
+            }
+             
+            //记录最终结果
+            StringBuilder res=new StringBuilder();
+            int n=arrI.length;
+            int size=0;
+            //遍历去重并排序后的规则序列
+            for(Integer Ri:set){
+                //记录满足条件的I的个数
+                int count=0;
+                //记录满足条件的I的索引和I
+                StringBuilder sb=new StringBuilder();
+                for(int i=1;i<n;i++){
+                    //如果包含，则加入到sb
+                    if(arrI[i].contains(String.valueOf(Ri))){
+                        count++;
+                        sb.append(i-1).append(" ");
+                        sb.append(arrI[i]).append(" ");
+                    }
+                }
+                if(count>0){
+                    //将对应的规则数字Ri、I的个数、索引、I加入到res
+                    res.append(Ri).append(" ");
+                    res.append(count).append(" ");
+                    res.append(sb);
+                    //记录整个结果有多少个整数输出
+                    size+=count*2+2;
+                }
+            }
+            System.out.println(size+" "+res.toString());
+        }
+    }
+}

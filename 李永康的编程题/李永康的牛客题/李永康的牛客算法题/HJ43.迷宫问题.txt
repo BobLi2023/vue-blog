@@ -1,0 +1,67 @@
+import java.util.*;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { // 注意 while 处理多个 case
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int[][] data = new int[x][y];
+            for(int i = 0; i < x; i++) {
+                for(int j = 0; j < y; j++) {
+                    data[i][j] = in.nextInt();
+                }
+            }
+            Queue<Point> points = new LinkedList<Point>();
+            points.offer(new Point(0, 0, null));
+            Point position = null;
+            data[0][0] = 1;
+            while(true) {
+                position = points.poll();
+                int px = position.x;
+                int py = position.y;
+                if(px == x-1 && py == y-1) {
+                    break;
+                }
+                if(px-1 >= 0 && data[px-1][py] == 0) {
+                    data[px-1][py] = 1;
+                    points.offer(new Point(px-1, py , position));
+                }
+                if(px+1 < x && data[px+1][py] == 0) {
+                    data[px+1][py] = 1;
+                    points.offer(new Point(px+1, py , position));
+                }
+                if(py-1 >= 0 && data[px][py-1] == 0) {
+                    data[px][py-1] = 1;
+                    points.offer(new Point(px, py-1 , position));
+                }
+                if(py+1 < y && data[px][py+1] == 0) {
+                    data[px][py+1] = 1;
+                    points.offer(new Point(px, py+1 , position));
+                }
+            }
+            prints(position);
+        }
+    }
+    public static void prints(Point position) {
+        if(position != null) {
+            prints(position.father);
+            System.out.println("("+position.x+","+position.y+")");
+        }
+    }
+}
+class Point {
+    Point father;
+    int x;
+    int y;
+    Point(int x, int y, Point father) {
+        this.x = x;
+        this.y = y;
+        this.father = father;
+    }
+    Point() {
+
+    }
+}

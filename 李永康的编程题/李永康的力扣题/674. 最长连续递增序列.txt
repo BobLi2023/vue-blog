@@ -1,0 +1,26 @@
+class Solution {
+    public int findLengthOfLCIS(int[] nums) {
+        int maxLength = 0;
+        int nowLength = 0;
+        for(int i = 0; i < nums.length; i++) {
+            if(nowLength == 0) {
+                nowLength++;
+                if(nowLength > maxLength) {
+                    maxLength = nowLength;
+                }
+            }
+            else {
+                if(nums[i] > nums[i-1]) {
+                    nowLength++;
+                    if(nowLength > maxLength) {
+                        maxLength = nowLength;
+                    }
+                }
+                else {
+                    nowLength = 1;
+                }
+            }
+        }
+        return maxLength;
+    }
+}

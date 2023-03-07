@@ -1,0 +1,27 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String context;
+        context = br.readLine();
+        System.out.println(count(context));
+    }
+    public static int count(String inputString) {
+        if(inputString.toCharArray().length < 1||inputString.toCharArray().length > 500) {
+            throw new IllegalArgumentException("输入内容长度不符合要求");
+        }
+        int count = 0;
+        Map<Character,Integer> map = new HashMap<>();
+        for(char inputChar:inputString.toCharArray()) {
+            if(inputChar >= 0 && inputChar <= 127 && !map.containsKey(inputChar)) {
+                map.put(inputChar,1);
+                count++;
+            }
+        }
+        return count;
+    }
+}

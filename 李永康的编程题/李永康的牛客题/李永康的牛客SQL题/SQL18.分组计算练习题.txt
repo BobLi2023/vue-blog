@@ -1,0 +1,1 @@
+select up.gender,up.university,count(*) as user_num,avg(up.active_days_within_30) as avg_active_days,avg(up.question_cnt) as avg_question_cnt from user_profile up group by up.university,up.gender;

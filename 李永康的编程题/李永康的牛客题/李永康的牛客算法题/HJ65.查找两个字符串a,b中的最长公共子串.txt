@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNext()) { // 注意 while 处理多个 case
+            String shortString = in.nextLine();
+            String longString = in.nextLine();
+            String equalLongestString = "";
+            if(shortString.length() > longString.length()) {
+                String tempString = shortString;
+                shortString = longString;
+                longString = tempString;
+            }
+            for(int i = 0; i < shortString.length(); i++) {
+                if(equalLongestString.length() >= shortString.length()-i-1) {
+                    break;
+                }
+                for(int j = 0; j < longString.length(); j++) {
+                    if(equalLongestString.length() >= longString.length()-j-1) {
+                        break;
+                    }
+                    boolean getEnding = false;
+                    while(getEnding == false && shortString.substring(i,i+1+equalLongestString.length()).equals(longString.substring(j,j+1+equalLongestString.length()))) {
+                        equalLongestString = shortString.substring(i,i+1+equalLongestString.length());
+                        if(i+1+equalLongestString.length() > shortString.length() || j+1+equalLongestString.length() > longString.length()) {
+                            getEnding = true;
+                        }
+                    }
+                    if(getEnding == true) {
+                        break;
+                    }
+                }
+            }
+            System.out.println(equalLongestString);
+        }
+    }
+}

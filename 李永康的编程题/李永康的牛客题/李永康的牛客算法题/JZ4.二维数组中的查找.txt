@@ -1,0 +1,41 @@
+public class Solution {
+    public boolean Find(int target, int [][] array) {
+        int i = 0;
+        int j = 0;
+        String direction = "right";
+        while(array[i].length != 0) {
+            if(array[i][j] == target) {
+                return true;
+            }
+            else if(array[i][j] < target) {
+                if(direction.equals("right")) {
+                    j++;
+                    if(j == array[i].length) {
+                        i++;
+                        j--;
+                        direction = "down";
+                        if(i == array.length) {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    i++;
+                    direction = "down";
+                    if(i == array.length) {
+                        return false;
+                    }
+                }
+            }
+            else {
+                i = 1;
+                j--;
+                direction = "down";
+                if(j == -1) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+}

@@ -1,0 +1,41 @@
+import java.util.*;
+
+
+public class Solution {
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param s string字符串 
+     * @return bool布尔型
+     */
+    public boolean isValidString (String s) {
+        // write code here
+        int minCount = 0;
+        int maxCount = 0;
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '(') {
+                minCount++;
+                maxCount++;
+            }
+            else if (s.charAt(i) == ')') {
+                minCount--;
+                maxCount--;
+                if(minCount == -1) {
+                    minCount = 0;
+                }
+                if(maxCount == -1) {
+                    return false;
+                }
+            }
+            else {
+                minCount--;
+                maxCount++;
+                if(minCount == -1) {
+                    minCount = 0;
+                }
+            }
+        }
+        return minCount == 0;
+    }
+}

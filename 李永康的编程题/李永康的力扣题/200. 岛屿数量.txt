@@ -1,0 +1,38 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        int amount = 0;
+        String[] checked = {"false"};
+        for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j < grid[i].length; j++) {
+                signIslands(i, j, grid, checked);
+                if(checked[0].equals("true")) {
+                    amount++;
+                    checked[0] = "false";
+                }
+            }
+        }
+        return amount;
+    }
+    public void signIslands(int i, int j, char[][] grid, String[] checked) {
+        if(grid[i][j] == '1') {
+             grid[i][j] = '2';
+             checked[0] = "true";
+            //检查上方是否有相连陆地
+            if(i-1 != -1) {
+                signIslands(i-1, j , grid, checked);
+            }
+            //检查下方是否有相连陆地
+            if(i+1 != grid.length) {
+                signIslands(i+1, j ,grid, checked);
+            }
+            //检查左方是否有相连陆地
+            if(j-1 != -1) {
+                signIslands(i, j-1 ,grid, checked);
+            }
+            //检查右方是否有相连陆地
+            if(j+1 != grid[i].length) {
+                signIslands(i, j+1 ,grid, checked);
+            }
+        }
+    }
+}

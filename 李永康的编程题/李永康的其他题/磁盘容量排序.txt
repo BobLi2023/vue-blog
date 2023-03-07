@@ -1,0 +1,77 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        String[] resultStrings = diskCapacitySort();
+        for (String resultString : resultStrings) {
+            System.out.println(resultString);
+        }
+    }
+
+    /**
+     * 磁盘容量排序
+     *
+     * @return {@link String[]}
+     *
+     * 磁盘的容量单位常用的有 M，G，T 这三个等级，关系为 1T = 1024G、1G = 1024M
+     * 如样例所示先输入磁盘的个数，再依次输入磁盘的容量大小，然后按照从小到大
+     * 的顺序对磁盘容量进行排序并输出。
+     * 3
+     * 1G
+     * 2G
+     * 1024M
+     * 输出
+     * 1G
+     * 1024M
+     * 2G
+     * 3
+     * 2G4M
+     * 3M2G
+     * 1T
+     * 输出
+     * 3M2G
+     * 2G4M
+     * 1T
+     *
+     */
+    public static String[] diskCapacitySort() {
+        Scanner scanner = new Scanner(System.in);
+        int length = scanner.nextInt();
+        String[] inputStrings = new String[length];
+        int[] inputStringsToNumbers = new int[length];
+        for (int i=0; i<inputStrings.length; i++) {
+            inputStrings[i] = scanner.next();
+        }
+        for (int i=0; i<inputStrings.length; i++) {
+            int leftPointer = 0;
+            int sum = 0;
+            for (int j=0; j<inputStrings[i].length(); j++) {
+                if (Character.isUpperCase(inputStrings[i].charAt(j))) {
+                    int cutNumber = Integer.parseInt(inputStrings[i].substring(leftPointer, j));
+                    if (inputStrings[i].charAt(j)=='M') {
+                        sum += cutNumber;
+                    }
+                    if (inputStrings[i].charAt(j)=='G') {
+                        sum += cutNumber*1024;
+                    }
+                    if (inputStrings[i].charAt(j)=='T') {
+                        sum += cutNumber*1024*1024;
+                    }
+                    leftPointer=j+1;
+                }
+            }
+            inputStringsToNumbers[i] = sum;
+        }
+        for (int i=0; i<inputStringsToNumbers.length; i++) {
+            for (int j=0; j<inputStringsToNumbers.length-1-i; j++) {
+                if (inputStringsToNumbers[j]>inputStringsToNumbers[j+1]) {
+                    int temp = inputStringsToNumbers[j];
+                    inputStringsToNumbers[j] = inputStringsToNumbers[j+1];
+                    inputStringsToNumbers[j+1] = temp;
+                    String tempString = inputStrings[j];
+                    inputStrings[j] = inputStrings[j+1];
+                    inputStrings[j+1] = tempString;
+                }
+            }
+        }
+        return inputStrings;
+    }
+}

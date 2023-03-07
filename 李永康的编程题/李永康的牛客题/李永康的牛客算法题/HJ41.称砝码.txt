@@ -1,0 +1,64 @@
+import java.util.*;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { // 注意 while 处理多个 case
+            int type = in.nextInt();
+            int[][] weights = new int[type][2];
+            int weight = 0;
+            for(int i = 0; i < type; i++) {
+                weights[i][0] = in.nextInt();
+            }
+            for(int i = 0; i < type; i++) {
+                weights[i][1] = in.nextInt();
+            }
+            HashSet<Integer> totalWeight = new HashSet<>();
+            totalWeight.add(0);
+            for(int i = 0; i < type; i++) {
+                ArrayList<Integer> currentAllSituation = new ArrayList<>(totalWeight);
+                for(int j = 1; j <= weights[i][1]; j++) {
+                    for(int index = 0; index < currentAllSituation.size(); index++) {
+                        totalWeight.add(currentAllSituation.get(index)+weights[i][0]*j);
+                    }
+                }
+            }
+            System.out.print(totalWeight.size());
+        }
+    }
+    // public static void main(String[] args) {
+    //     Scanner in = new Scanner(System.in);
+    //     // 注意 hasNext 和 hasNextLine 的区别
+    //     while (in.hasNextInt()) { // 注意 while 处理多个 case
+    //         int type = in.nextInt();
+    //         int[][] weights = new int[type][2];
+    //         int weight = 0;
+    //         for(int i = 0; i < type; i++) {
+    //             weights[i][0] = in.nextInt();
+    //         }
+    //         for(int i = 0; i < type; i++) {
+    //             weights[i][1] = in.nextInt();
+    //         }
+    //         HashSet<Integer> totalWeight = new HashSet<>();
+    //         dfs(weights,weight,totalWeight);
+    //         System.out.print(totalWeight.size()+1);
+    //     }
+    // }
+    // public static void dfs(int[][] weights,int weight,HashSet<Integer> totalWeight) {
+    //     for(int i = 0; i <weights.length; i++) {
+    //         if(weights[i][1] != 0) {
+    //             weights[i][1]--;
+    //             weight += weights[i][0];
+    //             totalWeight.add(weight);
+    //             dfs(weights,weight,totalWeight);
+    //             weight -= weights[i][0];
+    //             weights[i][1]++;
+    //         }
+    //         else {
+    //             continue;
+    //         }
+    //     }
+    // }
+}

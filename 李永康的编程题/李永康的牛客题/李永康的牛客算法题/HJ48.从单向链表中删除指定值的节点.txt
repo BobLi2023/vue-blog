@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { // 注意 while 处理多个 case
+            int totalNode = in.nextInt();
+            int headNodeValue = in.nextInt();
+            ListNode headNode = new ListNode(headNodeValue);
+            int currentNodeValue = 0;
+            int lastNodeValue = 0;
+            for(int i = 0; i < totalNode-1; i++) {
+                currentNodeValue = in.nextInt();
+                lastNodeValue = in.nextInt();
+                ListNode lastNode = headNode;
+                ListNode currentNode = new ListNode(currentNodeValue);
+                while(lastNode.value!=lastNodeValue) {
+                    lastNode = lastNode.next;
+                }
+                if(lastNode.next != null) {
+                    currentNode.next = lastNode.next;
+                }
+                lastNode.next = currentNode;
+            }
+            ListNode indexNode = headNode;
+            ListNode lastNode = headNode;
+            int round = 0;
+            int wantedValue = in.nextInt();
+            while(indexNode.value != wantedValue) {
+                lastNode = indexNode;
+                indexNode = indexNode.next;
+                round++;
+            }
+            if(round == 0) {
+                headNode = headNode.next;
+            }
+            if(indexNode.next != null) {
+                lastNode.next = indexNode.next;
+            }
+            if(indexNode.next == null) {
+                lastNode.next = null;
+            }
+            ListNode node = headNode;
+            int index = 0;
+            while(index < totalNode-1) {
+                System.out.print(node.value + " ");
+                node = node.next;
+                index++;
+            }
+        }
+    }
+}
+class ListNode {
+    int value;
+    ListNode next;
+    ListNode(int value) {
+        this.value = value;
+        next = null;
+    }
+}

@@ -1,0 +1,58 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main{
+   public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String str;
+        str = reader.readLine();
+        System.out.println(position(str));
+    }
+    public static String position(String inputString) {
+        int x = 0;
+        int y = 0;
+        String outPut = "";
+        String temp = "";
+        int letter = 0;
+        boolean digit = false;
+        boolean correct = true;
+        for(char inputChar:inputString.toCharArray()) {
+            if(!(inputChar=='A'||inputChar=='D'||inputChar=='W'||inputChar=='S'||Character.isDigit(inputChar)||inputChar == ';')) {
+                correct = false;
+            }
+            if(inputChar=='A'||inputChar=='D'||inputChar=='W'||inputChar=='S') {
+                temp = temp+inputChar;
+                letter++;
+            }
+            if(Character.isDigit(inputChar) && letter > 0) {
+                temp = temp+inputChar;
+                digit = true;
+            }
+            if(inputChar == ';') {
+                if(letter == 1 && digit == true && correct == true) {
+                    String direction = temp.substring(0,1);
+                    int number = Integer.parseInt(temp.substring(1));
+                    if(direction.equals("A")) {
+                        x = x-number;
+                    }
+                    if(direction.equals("D")) {
+                        x = x+number;
+                    }
+                    if(direction.equals("W")) {
+                        y = y+number;
+                    }
+                    if(direction.equals("S")) {
+                        y = y-number;
+                    }
+                }
+                letter = 0;
+                digit = false;
+                correct = true;
+                temp = "";
+            }
+        }
+        outPut = x+","+y;
+        return outPut;
+    }
+}

@@ -1,0 +1,1 @@
+select up.device_id,up.gender,up.age,up.university,up.gpa from user_profile up where up.university = "北京大学" or up.gpa > 3.7;

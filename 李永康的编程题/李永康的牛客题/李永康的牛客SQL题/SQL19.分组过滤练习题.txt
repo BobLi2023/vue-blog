@@ -1,0 +1,1 @@
+select up.university,avg(up.question_cnt) as avg_question_cnt,avg(up.answer_cnt) as avg_answer_cnt from user_profile up group by up.university having avg_question_cnt < 5 or avg_answer_cnt < 20;

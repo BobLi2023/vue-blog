@@ -1,0 +1,60 @@
+import java.util.*;
+
+
+public class Solution {
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param A string字符串 
+     * @return int整型
+     */
+    public int getLongestPalindrome (String A) {
+        return Math.max(checkPalindromeOdd(A),checkPalindromeEven(A));
+        // write code here
+    }
+    public int checkPalindromeOdd(String A) {
+        int maxLength = 1;
+        int index = 0;
+        while(index < A.length()) {
+            if(2*(A.length()-1-index)+1 <= maxLength) {
+                break;
+            }
+            for(int i = index; i >= 0; i--) {
+                if(2*index-i >= A.length()) {
+                    break;
+                }
+                if(A.charAt(i) == A.charAt(2*index-i)) {
+                    maxLength = Math.max(maxLength,2*(index-i)+1);
+                }
+                else {
+                    break;
+                }
+            }
+            index++;
+        }
+        return maxLength;
+    }
+    public int checkPalindromeEven(String A) {
+        int maxLength = 0;
+        int index = 0;
+        while(index < A.length()) {
+            if(2*(A.length()-1-index) <= maxLength) {
+                break;
+            }
+            for(int i = index; i >= 0; i--) {
+                if(2*index-i+1 >= A.length()) {
+                    break;
+                }
+                if(A.charAt(i) == A.charAt(2*index-i+1)) {
+                    maxLength = Math.max(maxLength,2*(index-i)+2);
+                }
+                else {
+                    break;
+                }
+            }
+            index++;
+        }
+        return maxLength;
+    }
+}

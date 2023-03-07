@@ -1,0 +1,63 @@
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> rottingOranges = new LinkedList<>();
+        int freshOranges = 0;
+        for(int i = 0; i < grid.length; i++) {
+            for(int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 1) {
+                    freshOranges++;
+                }
+                else if(grid[i][j] == 2) {
+                    rottingOranges.add(new int[]{i,j});
+                }
+            }
+        }
+        int time = 0;
+        while(!rottingOranges.isEmpty()) {
+            boolean rotted = false;
+            int size = rottingOranges.size();
+            for(int index = 0; index < size; index++) {
+                int[] rottingOrange = rottingOranges.poll();
+                int i = rottingOrange[0];
+                int j = rottingOrange[1];
+                //向上腐烂
+                if(i-1 != -1 && grid[i-1][j] == 1) {
+                    grid[i-1][j] = 2;
+                    freshOranges--;
+                    rotted = true;
+                    rottingOranges.add(new int[]{i-1,j});
+                }
+                //向下腐烂
+                if(i+1 != grid.length && grid[i+1][j] == 1) {
+                    grid[i+1][j] = 2;
+                    freshOranges--;
+                    rotted = true;
+                    rottingOranges.add(new int[]{i+1,j});
+                }
+                //向左腐烂
+                if(j-1 != -1 && grid[i][j-1] == 1) {
+                    grid[i][j-1] = 2;
+                    freshOranges--;
+                    rotted = true;
+                    rottingOranges.add(new int[]{i,j-1});
+                }
+                //向右腐烂
+                if(j+1 != grid[i].length && grid[i][j+1] == 1) {
+                    grid[i][j+1] = 2;
+                    freshOranges--;
+                    rotted = true;
+                    rottingOranges.add(new int[]{i,j+1});
+                }
+            }
+            if(rotted == true) {
+                time++;
+            }
+        }
+        if(freshOranges > 0) {
+            return -1;
+        }
+        else {
+            return time;
+        }
+    }
+}

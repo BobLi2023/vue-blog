@@ -1,0 +1,44 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(minNumberOfChanges(new int[]{1,5,3,1,4,6,0}, 2));
+    }
+
+    /**
+     * 最小交换次数
+     *
+     * @param inputNumbers 输入数字们
+     * @param maxNumber    最大数量
+     * @return int
+     *
+     * 整数数组 nums，整数 k。输出将数组中小于 k 的整数组合到一起的最小交换次数
+     * 组合在一起是指满足条件的数字相邻，不要求相邻后在数组中的位置
+     * 1 3 1 4 0 k=2
+     * 1 解析：交换第一个 1 和 4
+     * 0 0 0 1 0 k=2
+     * 0 解析：已经满足条件
+     * 2 3 2 k=1
+     * 0 解析：不存在小于 k 的数，无需交换
+     *
+     */
+    public static int minNumberOfChanges(int[] inputNumbers, int maxNumber) {
+        int count=0;
+        int maxCount = 0;
+        for (int i=0; i<inputNumbers.length; i++) {
+            if (inputNumbers[i]<maxNumber) {
+                count++;
+            }
+        }
+        for (int i=0; i<inputNumbers.length-count+1; i++) {
+            int currentCount = 0;
+            for (int j=i; j<i+count; j++) {
+                if (inputNumbers[j] < maxNumber) {
+                    currentCount++;
+                }
+            }
+            if (currentCount > maxCount) {
+                maxCount = currentCount;
+            }
+        }
+        return count-maxCount;
+    }
+}

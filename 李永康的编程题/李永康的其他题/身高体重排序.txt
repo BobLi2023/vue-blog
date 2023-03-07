@@ -1,0 +1,75 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        int[] results = heightAndWeightSort();
+        for (int result : results) {
+            System.out.print(result+" ");
+        }
+    }
+
+    /**
+     * 身高和体重排序
+     *
+     * @return {@link int[]}
+     *
+     * 按照身高由低到高排列，对身高相同的人，按体重由轻到重排列；对于身高体重
+     * 都相同的人，维持原有的编号顺序关系。
+     * 请输出排列后的学生编号。
+     * 第一个序列中的数值代表身高，第二个序列中的数值代表体重。
+     * 输出描述:排列结果，每个数值都是原始序列中的学生编号，编号从 1 开始
+     * 4
+     * 100 100 120 130
+     * 40 30 60 50
+     * 输出：2134
+     * 3
+     * 90 110 90
+     * 45 60 45
+     * 输出：132
+     *
+     */
+    public static int[] heightAndWeightSort() {
+        Scanner scanner = new Scanner(System.in);
+        int length = scanner.nextInt();
+        int[] positions = new int[length];
+        int[] heights = new int[length];
+        int[] weights = new int[length];
+        for (int i=0; i<length; i++) {
+            positions[i]=i+1;
+            heights[i] = scanner.nextInt();
+        }
+        for (int i=0; i<length; i++) {
+            weights[i] = scanner.nextInt();
+        }
+        for (int i=0; i<length; i++) {
+            int tempPosition = positions[i];
+            int tempHeight = heights[i];
+            int tempWeight = weights[i];
+            for (int j=i-1; j>=-1; j--) {
+                if (j==-1 || tempHeight>heights[j]) {
+                    positions[j+1]=tempPosition;
+                    heights[j+1]=tempHeight;
+                    weights[j+1]=tempWeight;
+                    break;
+                }
+                else if (tempHeight<heights[j]) {
+                    positions[j+1]=positions[j];
+                    heights[j+1]=heights[j];
+                    weights[j+1]=weights[j];
+                }
+                else if (tempHeight==heights[j]) {
+                    if (tempWeight>=weights[j]) {
+                        positions[j+1]=tempPosition;
+                        heights[j+1]=tempHeight;
+                        weights[j+1]=tempWeight;
+                        break;
+                    }
+                    else if (tempWeight<weights[j]) {
+                        positions[j+1]=positions[j];
+                        heights[j+1]=heights[j];
+                        weights[j+1]=weights[j];
+                    }
+                }
+            }
+        }
+        return positions;
+    }
+}

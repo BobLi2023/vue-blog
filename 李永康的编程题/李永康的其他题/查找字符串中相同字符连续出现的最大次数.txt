@@ -1,0 +1,44 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(findMaxSameContinuousLetterCount());
+    }
+
+    /**
+     * 查找字符串中相同字符连续出现的最大次数
+     *
+     * @return int
+     *
+     * 输入只有一行，包含一个长度不超过 100 的字符串
+     * 输出只有一行，输出相同字符串连续出现的最大次数
+     * hello
+     * 2
+     * word
+     * 1
+     * aaabbc
+     * 3
+     *
+     */
+    public static int findMaxSameContinuousLetterCount() {
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.next();
+        if (inputString.length()==1) {
+            return 1;
+        }
+        int maxCount = 1;
+        int leftPointer = 0;
+        int count = 1;
+        for (int i=1; i<inputString.length(); i++) {
+            if (inputString.charAt(i)==inputString.charAt(leftPointer)) {
+                count++;
+                if (count>maxCount) {
+                    maxCount = count;
+                }
+            }
+            else {
+                leftPointer = i;
+                count = 1;
+            }
+        }
+        return maxCount;
+    }
+}

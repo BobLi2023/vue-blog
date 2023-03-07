@@ -1,0 +1,42 @@
+class Solution {
+    public int longestBeautifulSubstring(String word) {
+        if(word.length()>500000) {
+            return 0;
+        }
+        char lastChar = '1';
+        char expectedChar = 'a';
+        int count = 0;
+        int max = 0;
+        Map<Character,Character> map = new HashMap<>();
+        map.put('1','a');
+        map.put('a','e');
+        map.put('e','i');
+        map.put('i','o');
+        map.put('o','u');
+        map.put('u','u');
+        for(char wordElement:word.toCharArray()) {
+            if(wordElement == expectedChar) {
+                count++;
+                lastChar = expectedChar;
+                expectedChar = map.get(expectedChar);
+                if(lastChar == 'u' && count>max) {
+                    max = count;
+                }
+            }
+            else if(wordElement == lastChar) {
+                count++;
+            }
+            else {
+                lastChar = '1';
+                expectedChar = 'a';
+                count = 0;
+                if(wordElement == 'a') {
+                    count++;
+                    lastChar = expectedChar;
+                    expectedChar = map.get(expectedChar);
+                }
+            }
+        }
+        return max;
+    }
+}

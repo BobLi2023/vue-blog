@@ -1,0 +1,36 @@
+import java.util.*;
+
+
+public class Solution {
+    
+    /** 
+     * 
+     * @param numbers int整型一维数组 
+     * @param target int整型 
+     * @return int整型一维数组 
+     */
+    public int[] twoSum (int[] numbers, int target) {
+        if(numbers.length<2||numbers.length>Math.pow(10,5)) {
+            throw new IllegalArgumentException("数组长度不合要求");
+        }
+        if(target<0||target>Math.pow(10,9)) {
+            throw new IllegalArgumentException("目标值不符合要求");
+        }
+        for(int i = 0; i < numbers.length; i++) {
+            if(numbers[i]<-10||numbers[i]>Math.pow(10,9)) {
+                throw new IllegalArgumentException("数组元素不符合要求");
+            }
+        }
+        // write code here 
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < numbers.length; i++) {
+            if(!map.containsKey(target-numbers[i])) {
+                map.put(numbers[i],i);
+            }
+            else {
+                return new int[]{map.get(target-numbers[i])+1,i+1};
+            }
+        }
+        throw new IllegalArgumentException("No solution");
+    }
+}

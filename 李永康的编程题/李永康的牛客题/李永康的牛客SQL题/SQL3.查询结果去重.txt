@@ -1,0 +1,1 @@
+select distinct up.university from user_profile up;

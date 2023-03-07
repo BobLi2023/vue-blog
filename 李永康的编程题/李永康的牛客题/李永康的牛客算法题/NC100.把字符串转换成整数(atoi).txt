@@ -1,0 +1,63 @@
+import java.util.*;
+
+
+public class Solution {
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param s string字符串 
+     * @return int整型
+     */
+    public int StrToInt (String s) {
+        // write code here
+        Long number = 0L;
+        int index = 0;
+        String symbol = "";
+        if(s.length() == 0) {
+            return 0;
+        }
+        while(s.charAt(index) == ' ') {
+            index++;
+            if(index == s.length()) {
+                return 0;
+            }
+        }
+        if(s.charAt(index) == '+') {
+            symbol = "+";
+            index++;
+        }
+        else if(s.charAt(index) == '-') {
+            symbol = "-";
+            index++;
+        }
+        else if(Character.isDigit(s.charAt(index))) {
+            number = number*10 + (s.charAt(index)-'0');
+            symbol = "+";
+            index++;
+        }
+        else {
+            return 0;
+        }
+        while(index < s.length() && Character.isDigit(s.charAt(index))) {
+            number = number*10 + (s.charAt(index)-'0');
+            index++;
+            if(number > Integer.MAX_VALUE) {
+                if(symbol.equals("+")) {
+                    return Integer.MAX_VALUE;
+                }
+                else if(symbol.equals("-")) {
+                    return Integer.MIN_VALUE;
+                }
+            }
+        }
+        if(symbol.equals("+")) {
+            return number.intValue();
+        }
+        else if(symbol.equals("-")) {
+            number = -number;
+            return number.intValue();
+        }
+        return number.intValue();
+    }
+}

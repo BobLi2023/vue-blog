@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String length = null;
+        String list = null;
+        String order = null;
+        length = br.readLine();
+        list = br.readLine();
+        order = br.readLine();
+        System.out.println(result(length,list,order));
+    }
+    public static String result(String length,String list,String order) {
+        String result = "";
+        int[] listToIntegers = new int[Integer.parseInt(length)];
+        int index = 0;
+        String[] stringToList = list.split(" ");
+        for(String stringToListElement :stringToList) {
+                listToIntegers[index] = Integer.parseInt(stringToListElement);
+                index++;
+        }
+        if(order.equals("0")) {
+            for(int i = 0; i < listToIntegers.length; i++) {
+                for(int j = i; j < listToIntegers.length; j++) {
+                    if(listToIntegers[i] > listToIntegers[j]) {
+                        int temp = listToIntegers[i];
+                        listToIntegers[i] = listToIntegers[j];
+                        listToIntegers[j] = temp;
+                    }
+                }
+            }
+            for(int i = 0; i < listToIntegers.length; i++) {
+                result = result + listToIntegers[i] + " ";
+            }
+            return result;
+        }
+        else {
+            for(int i = 0; i < listToIntegers.length; i++) {
+                for(int j = i; j < listToIntegers.length; j++) {
+                    if(listToIntegers[i] < listToIntegers[j]) {
+                        int temp = listToIntegers[i];
+                        listToIntegers[i] = listToIntegers[j];
+                        listToIntegers[j] = temp;
+                    }
+                }
+            }
+            for(int i = 0; i < listToIntegers.length; i++) {
+                result = result + listToIntegers[i] + " ";
+            }
+            return result;
+        }
+    }
+}

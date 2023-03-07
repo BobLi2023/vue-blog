@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+import java.util.regex.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+        while((input = reader.readLine())!=null) {
+            System.out.println(check(input));
+        }
+
+    }
+    public static String check(String password) {
+        if(password.length()<9) {
+            return "NG";
+        }
+        boolean large = false;
+        boolean small = false;
+        boolean digit = false;
+        boolean other = false;
+        int correctNumber = 0;
+        Pattern isLarge = Pattern.compile("[A-Z]");
+        Pattern isSmall = Pattern.compile("[a-z]");
+        Pattern isDigit = Pattern.compile("[0-9]");
+        Pattern isOther = Pattern.compile("[^A-Za-z0-9\\s\\n]");
+        if(isLarge.matcher(password).find()) {
+            large = true;
+            correctNumber++;
+        }
+        if(isSmall.matcher(password).find()) {
+            small = true;
+            correctNumber++;
+        }
+        if(isDigit.matcher(password).find()) {
+            digit = true;
+            correctNumber++;
+        }
+        if(isOther.matcher(password).find()) {
+            other = true;
+            correctNumber++;
+        }
+        if(correctNumber<3) {
+            return "NG";
+        }
+        if(checkRepeat(password,0,3)) {
+            return "NG";
+        }
+        return "OK";
+    }
+    public static boolean checkRepeat(String password,int start,int end) {
+        if(end >= password.length()) {
+            return false;
+        }
+        if(password.substring(end).contains(password.substring(start,end))) {
+            return true;
+        }
+        else {
+            return checkRepeat(password,start+1,end+1);
+        }
+    }
+}

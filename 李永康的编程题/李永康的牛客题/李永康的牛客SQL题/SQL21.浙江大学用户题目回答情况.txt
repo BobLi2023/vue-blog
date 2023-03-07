@@ -1,0 +1,1 @@
+select up.device_id,qpd.question_id,qpd.result from user_profile up left join question_practice_detail qpd on up.device_id = qpd.device_id where up.university = "浙江大学" order by qpd.question_id asc;

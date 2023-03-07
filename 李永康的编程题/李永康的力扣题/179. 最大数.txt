@@ -1,0 +1,76 @@
+class Solution {
+    /**
+     * 最大数
+     *
+     * @param nums 数字们
+     * @return {@link String}
+     *
+     * 给定一组非负整数 nums，重新排列每个数的顺序（每个数不可拆分）使之组成一个最大的整数
+     *
+     */
+    public static String largestNumber(int[] nums) {
+        for(int i=0; i<nums.length; i++) {
+            for(int j=0; j<nums.length-1-i; j++) {
+                int numberA = nums[j];
+                int numberB = nums[j+1];
+                String numberAStr = String.valueOf(numberA);
+                String numberBStr = String.valueOf(numberB);
+                if(numberA==numberB) {
+                    continue;
+                }
+                int maxLength = String.valueOf(numberA).length()+
+                        String.valueOf(numberB).length();
+                int index = 0;
+                int requireIndexA = 0;
+                int requireIndexB = 0;
+                boolean finished = false;
+                while(!finished) {
+                    if(numberAStr.length()>maxLength||numberBStr.length()>maxLength) {
+                        break;
+                    }
+                    if(index==numberAStr.length()) {
+                        numberAStr = numberAStr +
+                                String.valueOf(numberBStr.charAt(requireIndexA));
+                        requireIndexA++;
+                    }
+                    if(index==numberBStr.length()) {
+                        numberBStr = numberBStr +
+                                String.valueOf(numberAStr.charAt(requireIndexB));
+                        requireIndexB++;
+                    }
+                    if(numberAStr.charAt(index)==
+                            numberBStr.charAt(index)) {
+                        index++;
+                        continue;
+                    }
+                    if(numberAStr.charAt(index)<
+                            numberBStr.charAt(index)) {
+                        int temp = nums[j];
+                        nums[j] = nums[j+1];
+                        nums[j+1] = temp;
+                        break;
+                    }
+                    if(numberAStr.charAt(index)>
+                            numberBStr.charAt(index)) {
+                        finished = true;
+                        break;
+                    }
+                }
+            }
+        }
+        String result = "";
+        boolean findFirstNotZero = false;
+        for(int i=0; i<nums.length; i++) {
+            if(nums[i]!=0) {
+                findFirstNotZero = true;
+            }
+            if(findFirstNotZero) {
+                result=result+nums[i];
+            }
+        }
+        if(result.length()==0) {
+            return "0";
+        }
+        return result;
+    }
+}

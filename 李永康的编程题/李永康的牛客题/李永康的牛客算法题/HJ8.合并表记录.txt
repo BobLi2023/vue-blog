@@ -1,0 +1,54 @@
+import java.util.*;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { // 注意 while 处理多个 case
+            int amount = in.nextInt();
+            HashMap<Integer,Integer> indexes = new HashMap<>();
+            int key = 0;
+            int value = 0;
+            for(int i = 0; i < amount; i++) {
+                key = in.nextInt();
+                value = in.nextInt();
+                if(indexes.containsKey(key)) {
+                    indexes.put(key,indexes.get(key)+value);
+                }
+                else {
+                    indexes.put(key,value);
+                }
+            }
+            int[][] indexAndValue = new int[indexes.size()][2];
+            int i = 0;
+            for(Integer indexKey:indexes.keySet()) {
+                indexAndValue[i][0] = indexKey;
+                indexAndValue[i][1] = indexes.get(indexKey);
+                i++;
+            }
+            int temp = 0;
+            int tempValue = 0;
+            for(int index = 0; index < indexAndValue.length-1; index++) {
+                boolean change = false;
+                for(int j = 0; j < indexAndValue.length-1-index; j++) {
+                    if(indexAndValue[j][0] > indexAndValue[j+1][0]) {
+                        temp = indexAndValue[j][0];
+                        tempValue = indexAndValue[j][1];
+                        indexAndValue[j][0] = indexAndValue[j+1][0];
+                        indexAndValue[j][1] = indexAndValue[j+1][1];
+                        indexAndValue[j+1][0] = temp;
+                        indexAndValue[j+1][1] = tempValue;
+                        change = true;
+                    }
+                }
+                if(change == false) {
+                    break;
+                }
+            }
+            for(int index = 0; index < indexAndValue.length; index++) {
+                System.out.println(indexAndValue[index][0] + " " + indexAndValue[index][1]);
+            }
+        }
+    }
+}

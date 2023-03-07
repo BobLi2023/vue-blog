@@ -1,0 +1,63 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        int[] inputNumbers = DeduplicatedSort(new int[] {1,3,3,3,2,4,4,4,5});
+        for (int inputNumber : inputNumbers) {
+            System.out.println(inputNumber);
+        }
+    }
+    /**
+     * 去重排序
+     *
+     * @param inputNumbers 输入数字们
+     * @return {@link int[]}
+     *
+     * 给定一个乱序的数组，删除所有的重复元素，使得每个元素只出现一次，并且按
+     * 照出现的次数从高到低进行排序，
+     * 相同出现次数按照第一次出现顺序进行先后排序。
+     * 1 3 3 3 2 4 4 4 5
+     * 3 4 1 2 5
+     *
+     */
+    public static int[] DeduplicatedSort(int[] inputNumbers) {
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+        HashMap<Integer, Integer> orderMap = new HashMap<>();
+        int order = 0;
+        for (int inputNumber : inputNumbers) {
+            if (orderMap.get(inputNumber) == null) {
+                orderMap.put(inputNumber,order);
+                order++;
+            }
+            if (countMap.get(inputNumber) == null) {
+                countMap.put(inputNumber,1);
+            }
+            else {
+                countMap.put(inputNumber,countMap.get(inputNumber)+1);
+            }
+        }
+        int[] numbersOrderByCount = new int[countMap.size()];
+        //接下来使用插入排序
+        int index = 0;
+        for (Integer integer : countMap.keySet()) {
+            for (int i = index-1; i >=-1; i--) {
+                if (i == -1 || countMap.get(integer) < countMap.get(numbersOrderByCount[i])) {
+                    numbersOrderByCount[i+1] = integer;
+                    break;
+                }
+                else if (countMap.get(integer) > countMap.get(numbersOrderByCount[i])) {
+                    numbersOrderByCount[i+1] = numbersOrderByCount[i];
+                }
+                else if (countMap.get(integer) == countMap.get(numbersOrderByCount[i])) {
+                    if (orderMap.get(integer) > orderMap.get(numbersOrderByCount[i])) {
+                        numbersOrderByCount[i+1] = integer;
+                        break;
+                    }
+                    else if (orderMap.get(integer) < orderMap.get(numbersOrderByCount[i])) {
+                        numbersOrderByCount[i+1] = numbersOrderByCount[i];
+                    }
+                }
+            }
+            index++;
+        }
+        return numbersOrderByCount;
+    }
+}

@@ -1,0 +1,1 @@
+select up.device_id,up.gender,up.age,up.university,up.gpa from user_profile up where up.gender = "male" and up.gpa > 3.5;

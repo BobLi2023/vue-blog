@@ -1,0 +1,58 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+//        new int[]{7,5,9,4,2,6,8,3,5,4,3,9}
+//        new int[]{1,2,3,7,1,5,9,3,2,1}
+        System.out.println(findTheEndPoint(new int[]{7,5,9,4,2,6,8,3,5,4,3,9}));
+    }
+
+    /**
+     * 找终点
+     *
+     * @param inputNumbers 输入数字们
+     * @return int
+     *
+     * 一个正整数数组设为 nums,最大为 100 个成员。求从第一个成员开始正好走到数
+     * 组最后一个成员所使用的最小步骤数
+     * 要求：1.第一步必须从第一元素起，且 1<=第一步步长<len/2 (len 为数组长
+     * 度)
+     * 2.从第二步开始只能以所在成员的数字走相应的步数，不能多不能少，如果目标
+     * 不可达返回-1，只输出最小的步骤数量
+     * 3.只能向数组的尾部走不能向回走
+     * 输入描述：有正整数数组，空格分割
+     * 输出描述 ：最小步数，不存在输出-1
+     * 7 5 9 4 2 6 8 3 5 4 3 9
+     * 2
+     * 1 2 3 7 1 5 9 3 2 1
+     * -1
+     *
+     */
+    public static int findTheEndPoint(int[] inputNumbers) {
+        if (inputNumbers == null || inputNumbers.length == 1) {
+            return -1;
+        }
+        int count = 0;
+        LinkedList<Integer> indexOfNumbers = new LinkedList<>();
+        for (int i = 1; i < inputNumbers.length/2; i++) {
+            indexOfNumbers.addLast(i);
+        }
+        count++;
+        while (!indexOfNumbers.isEmpty()) {
+            int size = indexOfNumbers.size();
+            while (size > 0) {
+                int currentIndex = indexOfNumbers.pollFirst();
+                if (currentIndex == inputNumbers.length-1) {
+                    return count;
+                }
+                else if (inputNumbers[currentIndex]+currentIndex < inputNumbers.length) {
+                    indexOfNumbers.addLast(inputNumbers[currentIndex]+currentIndex);
+                }
+                else if (inputNumbers[currentIndex]+currentIndex > inputNumbers.length) {
+                    continue;
+                }
+                size--;
+            }
+            count++;
+        }
+        return -1;
+    }
+}

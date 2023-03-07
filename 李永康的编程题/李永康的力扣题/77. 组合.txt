@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> combinations = new ArrayList<>();
+        List<Integer> combination = new ArrayList<>();
+        getNextNumber(n, k, 1, 1, combinations, combination);
+        return combinations;
+    }
+    public void getNextNumber(int maxNumber, int maxCount, int nowNumber, int nowCount, List<List<Integer>> combinations, List<Integer> combination) {
+        if(nowCount > maxCount) {
+            return;
+        }
+        for(int i = nowNumber; i <= maxNumber; i++) {
+            if(maxNumber-i+1+combination.size() < maxCount) {
+                return;
+            }
+            combination.add(i);
+            if(combination.size() == maxCount) {
+                List<Integer> finishCombination = new ArrayList<>(combination);
+                combinations.add(finishCombination);
+            }
+            getNextNumber(maxNumber, maxCount, i+1, nowCount+1, combinations, combination);
+            combination.remove(combination.size()-1);
+        }
+    }
+}

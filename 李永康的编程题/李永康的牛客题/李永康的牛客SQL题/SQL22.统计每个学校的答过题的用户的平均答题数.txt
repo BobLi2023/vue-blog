@@ -1,0 +1,1 @@
+select up.university,count(qpd.question_id)/count(distinct up.device_id) as avg_answer_cnt from question_practice_detail qpd left join user_profile up on qpd.device_id = up.device_id group by up.university

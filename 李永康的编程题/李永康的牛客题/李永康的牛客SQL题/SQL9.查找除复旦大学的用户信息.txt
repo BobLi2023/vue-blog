@@ -1,0 +1,1 @@
+select up.device_id,up.gender,up.age,up.university from user_profile up where up.university != "复旦大学";

@@ -1,0 +1,68 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        String[] result = OMLogsSort();
+        for (String string : result) {
+            System.out.println(string);
+        }
+    }
+
+    /**
+     * 运维日志排序
+     *
+     * @return {@link String[]}
+     *
+     * 根据日志时间先后顺序对日志进行排序，日志时间格式为 H:M:S.N
+     * H 表示小时(0~23)
+     * M 表示分钟(0~59)
+     * S 表示秒(0~59)
+     * N 表示毫秒(0~999)
+     * 时间可能并没有补全，也就是说，01:01:01.001 也可能表示为 1:1:1.1
+     * 第一行输入一个整数 n 表示日志条数，1<=n<=100000，接下来 n 行输入 n 个时间
+     * 按时间升序排序之后的时间，如果有两个时间表示的时间相同，则保持输入顺序
+     * 2
+     * 01:41:8.9
+     * 1:1:09.211
+     * 1:1:09.211
+     * 01:41:8.9
+     * 3
+     * 23:41:08.023
+     * 1:1:09.211
+     * 08:01:22.0
+     * 1:1:09.211
+     * 08:01:22.0
+     * 23:41:08.023
+     *
+     */
+    public static String[] OMLogsSort() {
+        Scanner scanner = new Scanner(System.in);
+        int length = scanner.nextInt();
+        String[] inputStrings = new String[length];
+        HashMap<Double, String> hashMap = new HashMap<>();
+        ArrayList<Double> arrayList = new ArrayList<>();
+        for (int i = 0; i < inputStrings.length; i++) {
+            inputStrings[i] = scanner.next();
+        }
+        for (String inputString : inputStrings) {
+            String[] digits = inputString.split(":");
+            double number = 0;
+            for (String digit : digits) {
+                number = number*60 + Double.parseDouble(digit);
+            }
+            hashMap.put(number, inputString);
+            arrayList.add(number);
+        }
+        for (int i = 0; i < arrayList.size(); i++) {
+            for (int j = 0; j < arrayList.size()-1-i; j++) {
+                if (arrayList.get(j) > arrayList.get(j+1)) {
+                    double temp = arrayList.get(j);
+                    arrayList.set(j, arrayList.get(j+1));
+                    arrayList.set(j+1, temp);
+                }
+            }
+        }
+        for (int i=0; i<arrayList.size(); i++) {
+            inputStrings[i] = hashMap.get(arrayList.get(i));
+        }
+        return inputStrings;
+    }
+}

@@ -1,0 +1,32 @@
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        if(amount == 0) {
+            return 0;
+        }
+        int[] programma = new int[amount+1];
+        programma[0] = 1;
+        int[] minQuantity = new int[amount+1];
+        minQuantity[0] = 0;
+        for(int i = 0; i <= amount; i++) {
+            int minNumber = -1;
+            for(int index = 0; index < coins.length; index++) {
+                if(i-coins[index] >= 0 && programma[i-coins[index]] == 1) {
+                    programma[i] = 1;
+                    if(minNumber == -1) {
+                        minNumber = minQuantity[i-coins[index]]+1;
+                    }
+                    else {
+                        minNumber = Math.min(minNumber,minQuantity[i-coins[index]]+1);
+                    }
+                }
+            }
+            if(minNumber != -1) {
+                minQuantity[i] = minNumber;
+            }
+        }
+        if(minQuantity[amount] == 0) {
+            return -1;
+        }
+        return minQuantity[amount];
+    }
+}

@@ -1,0 +1,40 @@
+class Solution {
+    /**
+     * 排列序列
+     *
+     * @return int
+     */
+    public static int sortArrangement() {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        int minNumber = 0;
+        int maxNumber = 0;
+        for (int i=1; i<=n; i++) {
+            minNumber = minNumber*10+i;
+        }
+        for (int i=n; i>=1; i--) {
+            maxNumber = maxNumber*10+i;
+        }
+        int count = 0;
+        for (int currentNumber=minNumber; currentNumber<=maxNumber;currentNumber++) {
+            String currentString = String.valueOf(currentNumber);
+            boolean inExpectNumbers = true;
+            for (int i=1; i<=n; i++) {
+                if (currentString.contains(String.valueOf(i))) {
+                    continue;
+                }
+                else {
+                    inExpectNumbers = false;
+                }
+            }
+            if (inExpectNumbers) {
+                count++;
+                if (count == k) {
+                    return currentNumber;
+                }
+            }
+        }
+        return -1;
+    }
+}

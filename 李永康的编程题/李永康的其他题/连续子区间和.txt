@@ -1,0 +1,63 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(FiveKeyKeyboard(new int[] {1,1,5,1,5,2,4,4}));
+    }
+
+    /**
+     * 连续子区间和
+     *
+     * @return int
+     *
+     * 一串含有 c 个正整数的数组，求出有多少个下标的连续区间，它们的和大于等于
+     * x
+     * 第一行两个整数 c x
+     * 第二行有 c 个正整数
+     * 输出一个整数，表示所求的个数
+     * 3 6
+     * 2 4 7
+     * 输出：4
+     * 对于有 3 个整数构成的数组而言，总共有 6 个下标连续的区间，他们的和分别
+     * 为：
+     * 2 = 2
+     * 4 = 4
+     * 7 = 7
+     * 2 + 4 = 6
+     * 4 + 7 = 11
+     * 2 + 4 + 7 = 13
+     * 其中有 4 个和大于等于 6，所以答案等于 4
+     *
+     */
+    public static int SumOfContinuousSubIntervals() {
+        Scanner sc = new Scanner(System.in);
+        int count = 0;
+        while (sc.hasNextInt()) {
+            int[] numbers = new int[sc.nextInt()];
+            int targetNumber = sc.nextInt();
+            for (int i = 0; i < numbers.length; i++) {
+                numbers[i] = sc.nextInt();
+            }
+            LinkedList<Integer> sums = new LinkedList<>();
+            LinkedList<Integer> finalNumberIndex = new LinkedList<>();
+            for (int i = 0; i < numbers.length; i++) {
+                sums.offerLast(numbers[i]);
+                finalNumberIndex.offerLast(i);
+            }
+            while (!sums.isEmpty()) {
+                int size = sums.size();
+                for (int i = 0; i < size; i++) {
+                    int sum = sums.pollFirst();
+                    int currentIndex = finalNumberIndex.pollFirst();
+                    if (sum >= targetNumber) {
+                        count++;
+                    }
+                    if (currentIndex+1 < numbers.length) {
+                        sums.addLast(sum+numbers[currentIndex+1]);
+                        finalNumberIndex.addLast(currentIndex+1);
+                    }
+                }
+            }
+            return count;
+        }
+        return count;
+    }
+}

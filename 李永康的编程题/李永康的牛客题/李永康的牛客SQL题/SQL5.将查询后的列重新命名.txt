@@ -1,0 +1,1 @@
+select up.device_id as user_infos_example from user_profile up limit 0,2;

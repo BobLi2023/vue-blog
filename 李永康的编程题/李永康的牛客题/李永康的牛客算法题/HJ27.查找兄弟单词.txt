@@ -1,0 +1,43 @@
+import java.util.*;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { // 注意 while 处理多个 case
+            String[] inputStrings = in.nextLine().split(" ");
+            Integer wordNumber = Integer.parseInt(inputStrings[0]);
+            String origin = inputStrings[inputStrings.length-2];
+            Integer ordinalNumber = Integer.parseInt(inputStrings[inputStrings.length-1]);
+            List<String> brotherList = new ArrayList<>();
+            boolean contrastResult = false;
+            for(int i = 1; i <= wordNumber; i++) {
+                if(isBrother(origin,inputStrings[i])) {
+                    brotherList.add(inputStrings[i]);
+                }
+                //以下是错误的写法，虽然暂时不清楚为什么
+                // contrastResult = isBrother(origin,inputStrings[i]);
+                // contrastResult = true ? brotherList.add(inputStrings[i]):null;
+            }
+            System.out.println(brotherList.size());
+            Collections.sort(brotherList);
+            if(brotherList.size() >= ordinalNumber) {
+                System.out.println(brotherList.get(ordinalNumber-1));
+            }
+        }
+    }
+    public static boolean isBrother(String origin, String contrast) {
+        if(origin.length() != contrast.length() || contrast.equals(origin)) {
+            return false;
+        }
+        char[] originToChars = origin.toCharArray();
+        char[] contrastToChars = contrast.toCharArray();
+        Arrays.sort(originToChars);
+        Arrays.sort(contrastToChars);
+        String originChange = new String(originToChars);
+        String contrastChange = new String(contrastToChars);
+        return originChange.equals(contrastChange);
+        // return originChange.equals(contrastChange) ? true:false;
+    }
+}

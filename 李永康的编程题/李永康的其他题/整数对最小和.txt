@@ -1,0 +1,51 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(integerPairsMinSum());
+    }
+
+    /**
+     * 整数对最小和
+     *
+     * @return int
+     *
+     * 给定两个整数数组 array1、array2，数组元素按升序排列
+     * 假设从 array1、array2 中分别取出一个元素可构成一对元素，现在需要取出 k
+     * 对元素
+     * 并对取出的所有元素求和，计算和的最小值
+     * 3 1 1 2
+     * 3 1 2 3
+     * 2
+     * 输出 4
+     *
+     */
+    public static int integerPairsMinSum() {
+        Scanner scanner = new Scanner(System.in);
+        int length1 = scanner.nextInt();
+        int[] arrays1 = new int[length1];
+        for (int i=0; i<arrays1.length;i++) {
+            arrays1[i]=scanner.nextInt();
+        }
+        int length2 = scanner.nextInt();
+        int[] arrays2 = new int[length2];
+        for (int i=0; i<arrays1.length;i++) {
+            arrays2[i]=scanner.nextInt();
+        }
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i : arrays1) {
+            for (int j : arrays2) {
+                arrayList.add(i+j);
+            }
+        }
+        arrayList.sort(Comparator.naturalOrder());
+        int count = scanner.nextInt();
+        int sum = 0;
+        for (Integer integer : arrayList) {
+            sum += integer;
+            count--;
+            if (count==0) {
+                break;
+            }
+        }
+        return sum;
+    }
+}

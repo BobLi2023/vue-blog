@@ -1,0 +1,32 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(taxiFare(100));
+    }
+
+    /**
+     * 出租车计费
+     *
+     * @param inputNumber 输入数
+     * @return int
+     *
+     * 任何数字位置遇到数字 4 就直接跳过，其余功能都正常。
+     * 输入描述:只有一行，数字 N，表示里程表的读数。
+     * 输出描述:一个数字，表示实际产生的费用。以回车结束。
+     * 输入：17
+     * 输出：15
+     * 说明：17 表示计费表的表面读数。15 表示实际产生的费用其实只有 15 块钱。
+     * 5 # 4
+     * 17 # 15
+     * 100 # 81
+     *
+     */
+    public static int taxiFare(int inputNumber) {
+        int fare = inputNumber;
+        for (int i=0; i< inputNumber+1; i++) {
+            if (String.valueOf(i).indexOf("4") != -1) {
+                fare--;
+            }
+        }
+        return fare;
+    }
+}

@@ -1,0 +1,1 @@
+select up.device_id,up.gender,up.age from user_profile up where up.age between 20 and 23;

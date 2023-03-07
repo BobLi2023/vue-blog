@@ -1,0 +1,81 @@
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        System.out.println(FiveKeyKeyboard(new int[] {1,1,5,1,5,2,4,4}));
+    }
+
+    /**
+     * 五键键盘
+     *
+     * @param inputNumbers 输入数字们
+     * @return int
+     *
+     * a 键在屏幕上输出一个字母 a; 屏幕+
+     * ctrl-c 将当前选择的字母复制到剪贴板; =剪贴板
+     * ctrl-x 将当前选择的字母复制到剪贴板，并清空选择的字母; =剪贴板 选
+     * 择=0
+     * ctrl-v 将当前剪贴板里的字母输出到屏幕; 屏幕=剪贴板
+     * ctrl-a 选择当前屏幕上所有字母。 屏幕
+     * 1、剪贴板初始为空，新的内容被复制到剪贴板时会覆盖原来的内容
+     * 2、当屏幕上没有字母时，ctrl-a 无效
+     * 3、当没有选择字母时，ctrl-c 和 ctrl-x 无效
+     * 4、当有字母被选择时，a 和 ctrl-v 这两个有输出功能的键会先清空选择的字母，
+     * 再进行输出
+     * 给定一系列键盘输入，输出最终屏幕上字母的数量。
+     * 输入为一行，为简化解析，用数字 12345 代表 a,ctrl-c,ctrl-x,ctrl-v,ctrl-a 五个键的输入，数字用空格分隔
+     * 输出一个数字，为最终屏幕上字母的数量。
+     * 1 1 5 1 5 2 4 4
+     * 2
+     *
+     */
+    public static int FiveKeyKeyboard(int[] inputNumbers) {
+        int currentCount = 0;
+        int copyCount = 0;
+        boolean ctrlA = false;
+        for (int i = 0; i < inputNumbers.length; i++) {
+
+            if (inputNumbers[i] == 1) {
+                //屏幕上输出一个a
+                if (ctrlA) {
+                    currentCount = 1;
+                    ctrlA = false;
+                }
+                else {
+                    currentCount++;
+                }
+            }
+
+            if (inputNumbers[i] == 2) {
+                //ctrlC
+                if (ctrlA) {
+                    copyCount = currentCount;
+                }
+            }
+
+            if (inputNumbers[i] == 3) {
+                //ctrlX
+                if (ctrlA) {
+                    copyCount = currentCount;
+                    currentCount = 0;
+                }
+
+            }
+            if (inputNumbers[i] == 4) {
+                //ctrlV
+                if (ctrlA) {
+                    currentCount = copyCount;
+                    ctrlA = false;
+                } else {
+                    currentCount += copyCount;
+                }
+
+            }
+
+            if (inputNumbers[i] == 5) {
+                // ctrlA
+                ctrlA = true;
+            }
+
+        }
+        return currentCount;
+    }
+}
