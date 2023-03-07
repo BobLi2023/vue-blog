@@ -8,6 +8,7 @@ import com.markerhub.common.lang.Result;
 import com.markerhub.entity.User;
 import com.markerhub.service.UserService;
 import com.markerhub.util.JwtUtils;
+import com.markerhub.util.RedisUtil;
 import io.jsonwebtoken.lang.Assert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -29,6 +30,9 @@ public class AccountController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    RedisUtil redisUtil;
+
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
 
@@ -39,6 +43,7 @@ public class AccountController {
             return Result.fail("密码不正确");
         }
         String jwt = jwtUtils.generateToken(user.getId());
+        redisUtil.set(user.getId().toString()+user.getUsername(),jwt);
 
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
